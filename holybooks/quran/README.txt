@@ -1,6 +1,6 @@
-quran verses are structured as follows X/Y.txt, where X is the sorah
-identifier, and Y is the verse identifier. e.g. 1/3.txt is the 3rd verse in the
-1st sorah.
+english-translated quran verses are structured as follows X/Y.txt, where X is
+the sorah identifier, and Y is the verse identifier. e.g. 1/3.txt is the 3rd
+verse in the 1st sorah.
 
 to fetch sorah, say 5, from quran.com:
     python fetch_quran.com.py 5
