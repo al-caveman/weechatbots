@@ -1,0 +1,1 @@
+The ones who establish prayer, and from what We have provided them, they spend.

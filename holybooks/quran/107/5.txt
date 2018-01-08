@@ -1,0 +1,1 @@
+[But] who are heedless of their prayer -

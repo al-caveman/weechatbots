@@ -1,0 +1,1 @@
+And Allah is most knowing of your enemies; and sufficient is Allah as an ally, and sufficient is Allah as a helper.

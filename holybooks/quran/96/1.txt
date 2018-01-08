@@ -1,0 +1,1 @@
+Recite in the name of your Lord who created -

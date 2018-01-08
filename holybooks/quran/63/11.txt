@@ -1,0 +1,1 @@
+But never will Allah delay a soul when its time has come. And Allah is Acquainted with what you do.

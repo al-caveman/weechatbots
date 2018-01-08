@@ -1,0 +1,1 @@
+The path of those upon whom You have bestowed favor, not of those who have evoked [Your] anger or of those who are astray.

@@ -1,0 +1,1 @@
+And establish prayer and give zakah and bow with those who bow [in worship and obedience].
