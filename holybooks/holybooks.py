@@ -16,16 +16,17 @@ QURAN = os.path.expanduser('~/.weechat/python/quran/{}/{}.txt')
 MAX_LEN = 200
 
 def callback(data, signal, signal_data):
-    #wc.prnt('', signal)
-    #wc.prnt('', signal_data)
+    wc.prnt('', signal)
+    wc.prnt('', signal_data)
 
     network = signal.split(',')[0]
     channel = signal_data.split(' ')[2]
     nickname = signal_data[1:signal_data.find('!')]
-    msg = signal_data.split(':')[2]
+    msg = ' '.join(signal_data.split(':')[2:])
 
-    if re.match('^!quran +\d+[^d]+\d+$', msg) != None:
-        sid, vid= re.split('[^\d]', msg)[-2:]
+    if re.match(r'^!quran[^\d]+\d+[^\d]+\d+$', msg) != None:
+        sid, vid = re.split(r'[^\d]', msg)[-2:]
+        wc.prnt('', str([sid, vid]))
 
         # load verse and send it
         with open(QURAN.format(sid, vid), 'r') as f:
