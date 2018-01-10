@@ -156,7 +156,7 @@ def callback(data, signal, signal_data):
         # make response
         response = (
             'use the syntax !BOOK CHAPTER:VERSE, where BOOK is one of '
-            'the following: {}.'.format(nickname, ' '.join(BIBLE_KJV_BOOKS))
+            'the following: {}.'.format(' '.join(BIBLE_KJV_BOOKS))
         )
 
         # send help to pm
