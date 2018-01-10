@@ -98,15 +98,18 @@ def loadfile(p):
     return verse
 
 def sendresponse(network, channel, response):
-    wc.hook_signal_send (
-        'irc_input_send',
-        wc.WEECHAT_HOOK_SIGNAL_STRING,
-        '{};{};priority_low;;{}'.format(
-            network,
-            channel,
-            response
-        )
-    )
+    wc.command('', '/msg -server {} {} {}'.format(
+        network, channel, response
+    ))
+    #wc.hook_signal_send (
+    #    'irc_input_send',
+    #    wc.WEECHAT_HOOK_SIGNAL_STRING,
+    #    '{};{};priority_low;;{}'.format(
+    #        network,
+    #        channel,
+    #        response
+    #    )
+    #)
 
 def callback(data, signal, signal_data):
     # parse wtf
@@ -152,12 +155,12 @@ def callback(data, signal, signal_data):
     elif book == 'bible':
         # make response
         response = (
-            '/msg {} use the syntax !BOOK CHAPTER:VERSE, where BOOK is one of '
+            'use the syntax !BOOK CHAPTER:VERSE, where BOOK is one of '
             'the following: {}.'.format(nickname, ' '.join(BIBLE_KJV_BOOKS))
         )
 
         # send help to pm
-        sendresponse(network, channel, response)
+        sendresponse(network, nickname, response)
 
         # remind that pm is sent
         sendresponse(network, channel, '{}: help pmed to you.'.format(
