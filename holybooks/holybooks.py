@@ -160,7 +160,9 @@ def callback(data, signal, signal_data):
         sendresponse(network, channel, response)
 
         # remind that pm is sent
-        sendresponse(network, channel, '{}: help pmed to you.'.format(nickname))
+        sendresponse(network, channel, '{}: help pmed to you.'.format(
+            nickname
+        ))
 
     elif book in BIBLE_KJV_BOOKS:
         m = re.match(
@@ -170,11 +172,13 @@ def callback(data, signal, signal_data):
         if m:
             cid = m.groupdict()['chapter']
             vid = m.groupdict()['verse']
-            verse = loadfile('{}/{}/{}/{}.txt'.format(BIBLE_KJV, book, cid, vid))
+            verse = loadfile('{}/{}/{}/{}.txt'.format(
+                BIBLE_KJV, book, cid, vid
+            ))
             response = (
                 '{} {}:{}: {} '
                 'https://www.kingjamesbibleonline.org/{}-{}-{}/'.format(
-                book,
+                BOOK_FRIENDLY[book],
                 cid, vid, verse,
                 BOOK_FRIENDLY[book], cid, vid
             ))
