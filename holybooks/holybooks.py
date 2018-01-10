@@ -113,17 +113,28 @@ def sendresponse(network, channel, response):
 
 def callback(data, signal, signal_data):
     # parse wtf
-    network = signal.split(',')[0]
-    channel = signal_data.split(' ')[2]
-    nickname = signal_data[1:signal_data.find('!')]
+    network, event = signal.split(',')
+    if event.find('in') >= 0:
+        m_signal_data = re.match(
+            r'^:(?P<nickname>\S+)!\S+ PRIVMSG (?P<channel>\S+) :(?P<msg>.*)$',
+            signal_data
+        )
+        nickname = m_signal_data.groupdict()['nickname']
+    elif event.find('out') >= 0:
+        m_signal_data = re.match(
+            r'^PRIVMSG (?P<channel>\S+) :(?P<msg>.*)$',
+            signal_data
+        )
+        nickname = wc.info_get('irc_nick', network)
+    channel = m_signal_data.groupdict()['channel']
+    msg = m_signal_data.groupdict()['msg']
+    msg = msg.lower()
 
     # run only in supported channels
     if '{}/{}'.format(network,channel) not in CHANNELS_ACTIVE:
         return wc.WEECHAT_RC_OK
 
     # get book name
-    msg = ' '.join(signal_data.split(':')[2:])
-    msg = msg.lower()
     m_book = re.match(r'^!(?P<book>\w+)', msg)
     if m_book:
         book = m_book.groupdict()['book']
@@ -195,3 +206,4 @@ def callback(data, signal, signal_data):
     return wc.WEECHAT_RC_OK
 
 wc.hook_signal('*,irc_in2_PRIVMSG', 'callback', '')
+wc.hook_signal('*,irc_out_PRIVMSG', 'callback', '')
