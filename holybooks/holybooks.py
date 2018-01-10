@@ -15,7 +15,7 @@ wc.register(
 MAX_LEN = 200
 QURAN = os.path.expanduser('~/.weechat/python/quran')
 BIBLE_KJV = os.path.expanduser('~/.weechat/python/bible/kjv')
-BIBLE_KJV_BOOKS = os.listdir(BIBLE_KJV)
+BIBLE_KJV_BOOKS = sorted(os.listdir(BIBLE_KJV))
 CHANNELS_ACTIVE = [
     'freenode/#gentoo-chat-exile',
     'freesay/#freesay',
