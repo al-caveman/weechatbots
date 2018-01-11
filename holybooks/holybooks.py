@@ -18,6 +18,7 @@ BIBLE_KJV = os.path.expanduser('~/.weechat/python/bible/kjv')
 BIBLE_KJV_BOOKS = sorted(os.listdir(BIBLE_KJV))
 CHANNELS_ACTIVE = [
     'freenode/#gentoo-chat-exile',
+    'freenode/#weechat',
     'freesay/#freesay',
     'freenode/##happylol'
 ]
@@ -98,18 +99,10 @@ def loadfile(p):
     return verse
 
 def sendresponse(network, channel, response):
+    wc.prnt('', 'SENDING')
     wc.command('', '/msg -server {} {} {}'.format(
         network, channel, response
     ))
-    #wc.hook_signal_send (
-    #    'irc_input_send',
-    #    wc.WEECHAT_HOOK_SIGNAL_STRING,
-    #    '{};{};priority_low;;{}'.format(
-    #        network,
-    #        channel,
-    #        response
-    #    )
-    #)
 
 def callback(data, signal, signal_data):
     # parse wtf
