@@ -4,10 +4,10 @@ import os
 
 wc.register(
     'gentoofix',
-    'Al-Caveman <toraboracaveman [at] gmail [dot] com>',
+    'Al-Caveman <toraboracaveman [at] protonmail [dot] com>',
     '0.0.1',
     'GPL3',
-    'A bot that exoses the gentoo scam',
+    'A bot that exposes the gentoo scam',
     '',
     ''
 )
