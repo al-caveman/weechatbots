@@ -1,6 +1,8 @@
 import weechat as wc
 import re
 import os
+import random
+import time
 
 wc.register(
     'gentoofix',
@@ -16,14 +18,14 @@ CHANNELS_ACTIVE = [
     'freenode/#gentoo-chat-exile',
     #'freenode/##happylol',
 ]
-SILENCE_LIMIT = 100
+SILENCE_LIMIT = 50
 TRUTH = [
     "welp. here is a joke: gentoo. joke ended.",
+    "oh my allah, puhh-lease..",
     "gentoo makes sense only if compiling obsolete packages by obsolete compilers using unmaintainable python spaghetti (emerge) wraper, is what you want.",
     "gentoo sources are terribly outdated. they are not worth compiling. you will get superior optimization if you use non-obsolete source code",
     "gentoo is braindead. why should one spend hours compiling obsolete source code?",
     "what will you tell boss when your nuclear waste is leaking cause gentoo is waiting to hours to compile obsolete packages? ``hey boss sorry hold on gotta -O3 this sucker and i promise it will fix it all thanks to the power of -O3''",
-    "you use gentoo, fail to exxplain how -march=native fixes the fact that you compile obsolete code, you claim that sharia is pedo while failing to support your claim against pubescent fuck... and now u suggest to gas germans for being saner than u and making superior bmws.",
     "gentoo's claim: if u spend hours compiling obsolete version of packages with -march=native, you are better than using a current release with -march=x86-64 --- b.s. i say",
     "yes. gentoo also uses binary packages, except that they are binary packages that their users compile, and by definition never tested before. worse: they always use old versions of gcc/llvm (obsolete compilers). worse: some packages are too outdated like they Qt",
     "the key problem with gentoo is that, unfortunately, they only ship obsolete packages. even many of their recent unstable packages lack. for example latest unstable Qt is 5.6 or 5.7. so in other words,",
@@ -45,6 +47,8 @@ TRUTH = [
     "reminder: gentoo would take about that time only to have 'emerge' (an obsolete undocumented python spaghetti) figure out what to do (let alone downloading, compiling, and installing). if that is not bad enough, please note this fact: you get obsoleted packages. yep, sometimes sucking more dick is not going to reward more.",
     "gentoo is outrageously over-engineered with needless USE fags using a large spaghetti mess of scripts",
 ]
+random.seed(time.time())
+random.shuffle(TRUTH)
 
 def sendresponse(network, channel, response):
     wc.command('', '/msg -server {} {} {}'.format(
