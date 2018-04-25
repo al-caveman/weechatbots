@@ -1,9 +1,57 @@
+# coding=utf8
 import weechat as wc
 import re
 import os
 import random
 import time
 
+
+######################
+#                    #
+# constant wannabies #
+#                    #
+######################
+CHANNELS_ACTIVE = [
+    'freenode/#gentoo-chat-exile',
+    #'freenode/##happylol',
+]
+SILENCE_LIMIT = 50
+TRUTH = [
+    "( ͡◉ ͜ʖ ͡◉)",
+    "r: g. s.",
+    "welp.",
+    "G-d bless catholic priests.",
+    "pacman is fast.",
+    "pacman is good.",
+    "i like pacman.",
+    "reminder: imo gentoo devs r schwul.",
+    "reminder: imo systemd is nice.",
+    "reminder: imo arch is nice.",
+    "reminder: imo gentoo is not nice.",
+    "reminder: imo gentoo devs charlatans.",
+    "reminder: imo opal is not nice.",
+    "reminder: imo some gentoo devs need to enter this list: https://en.wikipedia.org/wiki/Charlatan#Infamous_individuals",
+    "reminder: Khabib Abdulmanapovich Nurmagomedov is the undefeated undisputed champion of the flagship weight division of u.f.c. - allahuackbar.",
+    """reminder: ``That is Jesus, the son of Mary - the word of truth about which they are in dispute.'' -- https://quran.com/19/34.""",
+    """reminder: ``Say, "If the sea were ink for [writing] the words of my Lord, the sea would be exhausted before the words of my Lord were exhausted, even if We brought the like of it as a supplement."''.""",
+    """reminder: ``He is Allah, other than whom there is no deity, the Sovereign, the Pure, the Perfection, the Bestower of Faith, the Overseer, the Exalted in Might, the Compeller, the Superior. Exalted is Allah above whatever they associate with Him.''.""",
+    """reminder: ``And your Lord has decreed that you not worship except Him, and to parents, good treatment. Whether one or both of them reach old age [while] with you, say not to them [so much as], "uff," and do not repel them but speak to them a noble word.''.""",
+    """reminder: ``Satan only wants to cause between you animosity and hatred through intoxicants [sic. alcohol] and gambling and to avert you from the remembrance of Allah and from prayer. So will you not desist?''.""",
+]
+BYPASS_NICKS = [
+#    'blop',
+#    'blap',
+#    'blop_',
+#    'blap_',
+]
+BYPASS_PAUSE = 1
+
+
+########################
+#                      #
+# global var wannabies #
+#                      #
+########################
 wc.register(
     'gentoofix',
     'Al-Caveman <toraboracaveman [at] protonmail [dot] com>',
@@ -13,51 +61,23 @@ wc.register(
     '',
     ''
 )
-
-CHANNELS_ACTIVE = [
-    'freenode/#gentoo-chat-exile',
-    #'freenode/##happylol',
-]
-SILENCE_LIMIT = 50
-TRUTH = [
-    "welp. here is a joke: gentoo. joke ended.",
-    "oh my allah, puhh-lease..",
-    "gentoo makes sense only if compiling obsolete packages by obsolete compilers using unmaintainable python spaghetti (emerge) wraper, is what you want.",
-    "gentoo sources are terribly outdated. they are not worth compiling. you will get superior optimization if you use non-obsolete source code",
-    "gentoo is braindead. why should one spend hours compiling obsolete source code?",
-    "what will you tell boss when your nuclear waste is leaking cause gentoo is waiting to hours to compile obsolete packages? ``hey boss sorry hold on gotta -O3 this sucker and i promise it will fix it all thanks to the power of -O3''",
-    "gentoo's claim: if u spend hours compiling obsolete version of packages with -march=native, you are better than using a current release with -march=x86-64 --- b.s. i say",
-    "yes. gentoo also uses binary packages, except that they are binary packages that their users compile, and by definition never tested before. worse: they always use old versions of gcc/llvm (obsolete compilers). worse: some packages are too outdated like they Qt",
-    "the key problem with gentoo is that, unfortunately, they only ship obsolete packages. even many of their recent unstable packages lack. for example latest unstable Qt is 5.6 or 5.7. so in other words,",
-    "one would expect that, after hours of compiling, gentoo would give u something worth it? nope! all obsolete crap!",
-    "gentoo is obsolete.",
-    "i mean, 'gentoo' is a hippie name. if this is not an obvious-enough about its obsoleteness, i don't know what is",
-    "i mean. gentoo's logo is a purple goat. their official psychological customer support (#chat) is at best bad terrible. tell you to wait hours to compile obsolete version of packages. then they expect you to be happy? what is surprising is how was i blind for the past years? this is major-league magic we are dealing with. but inshallah i'll probaly start a campiagn www.gentooIsScam.com",
-    "gentoo is rolling deprecated packages that also expects you to spend hours to compile obsolete code. totally crazy",
-    "gentoo is obsolete. i see no merit in exporting gentoo on multiple kernels. it doesn't serve any purpose.",
-    "reminder: gentoo would take about that time only to have 'emerge' (an obsolete undocumented python spaghetti) figure out what to do (let alone downloading, compiling, and installing). if that is not bad enough, please note this fact: you get obsoleted packages. yep, sometimes sucking more dick is not going to reward more.",
-    "even if i fix emerge, and portage, the problem remains: gentoo ebuild maintainers love obsolete shit.",
-    "gentoo's claim: if you spend hours compiling old versions of apps, then the binary you get will make you happy because compiling with -march=native will compensate for obsolete source code.",
-    "reminder pz: gentoo is obsolete. #gentoo exists for recreational purposes.",
-    "key gentoo issue: spending hours compiling with -march=native, will not solve the fact that your, both, compiler and app-to-build are obsolete. ",
-    "i just wanted to say that, if u r using gentoo, and regretting not compiling with proper USE fags, then u actually have also a bigger problem: obsolete compiler. i think gentoo is still with gcc v5?",
-    "gentoo's core is `emerge', an undocumented python spaghetti that only gets worse over time. yet, gentoo devs focus on creating init systems (openrc2) and mingling with upstream packages like upstream devs (e.g. qt). why don't they fix their emerge instead?",
-    "well gentoo ppl r getting donations, plus the 'chosen' con artists (aka devs) get jobs after they lock their employers into the unmaintainable gentoo spaghetti to ensure their job security, and deepen the roots of their evil profit",
-    "with gentoo (purple goat), you spend much more than 52 seconds to merely have emerge (an undocumented spaghetti of shit in python) figure out what it needs to do. let alone the hours spent compiling shit. let alone that, once you compile, you will necessarily have deprecated binaries (by definition)",
-    "reminder: gentoo would take about that time only to have 'emerge' (an obsolete undocumented python spaghetti) figure out what to do (let alone downloading, compiling, and installing). if that is not bad enough, please note this fact: you get obsoleted packages. yep, sometimes sucking more dick is not going to reward more.",
-    "gentoo is outrageously over-engineered with needless USE fags using a large spaghetti mess of scripts",
-]
 random.seed(time.time())
 random.shuffle(TRUTH)
+truth_i = 0
+previous_chat_messages = {}
 
+
+########################
+#                      #
+# func niggr wannabies #
+#                      #
+########################
 def sendresponse(network, channel, response):
     wc.command('', '/msg -server {} {} {}'.format(
         network, channel, response
     ))
 
-truth_i = 0
-previous_chat_messages = 0
-def callback(data, signal, signal_data):
+def educate(data, signal, signal_data):
     global truth_i
     global previous_chat_messages
 
@@ -72,16 +92,55 @@ def callback(data, signal, signal_data):
     msg = m_signal_data.groupdict()['msg']
     msg = msg.lower()
 
-    # run only in supported channels
-    if '{}/{}'.format(network,channel) not in CHANNELS_ACTIVE:
-        return wc.WEECHAT_RC_OK
+    # channel i.d.
+    chan_id = '{}/{}'.format(network,channel)
 
-    # send truth only if enough shit was said
-    previous_chat_messages += 1
-    if previous_chat_messages % SILENCE_LIMIT == 0:
-        sendresponse(network, channel, TRUTH[truth_i % len(TRUTH)])
-        truth_i += 1
+    # run only in supported channels
+    if chan_id in CHANNELS_ACTIVE:
+        # send truth only if enough shit was said
+        if chan_id in previous_chat_messages:
+            previous_chat_messages[chan_id] += 1
+        else:
+            previous_chat_messages[chan_id] = 1
+
+        # reset counter if some bypass dude talks
+        if nickname in BYPASS_NICKS:
+            if previous_chat_messages[chan_id] > BYPASS_PAUSE:
+                previous_chat_messages[chan_id] -= BYPASS_PAUSE
+
+        if previous_chat_messages[chan_id] % SILENCE_LIMIT == 0:
+            sendresponse(network, channel, TRUTH[truth_i % len(TRUTH)])
+            truth_i += 1
 
     return wc.WEECHAT_RC_OK
 
-wc.hook_signal('*,irc_in2_PRIVMSG', 'callback', '')
+def think(data, signal, signal_data):
+    global previous_chat_messages
+
+    # parse input messages
+    network, event = signal.split(',')
+    m_signal_data = re.match(
+        r'^PRIVMSG (?P<channel>\S+) :(?P<msg>.*)$',
+        signal_data
+    )
+    channel = m_signal_data.groupdict()['channel']
+    msg = m_signal_data.groupdict()['msg']
+    msg = msg.lower()
+
+    # channel i.d.
+    chan_id = '{}/{}'.format(network,channel)
+
+    # run only in supported channels
+    if chan_id in CHANNELS_ACTIVE:
+        previous_chat_messages[chan_id] = 0
+
+    return wc.WEECHAT_RC_OK
+
+
+########################
+#                      #
+#       hookers        #
+#                      #
+########################
+wc.hook_signal('*,irc_in2_PRIVMSG', 'educate', '')
+wc.hook_signal('*,irc_out_PRIVMSG', 'think', '')
