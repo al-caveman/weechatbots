@@ -18,6 +18,8 @@ CHANNELS_ACTIVE = [
 SILENCE_LIMIT = 50
 TRUTH = [
     "( ͡◉ ͜ʖ ͡◉)",
+    "(╯°□°）╯︵ ┻━┻)",
+    "┬─┬ノ(º _ ºノ)",
     "r: g. s.",
     "welp.",
     "G-d bless catholic priests.",
@@ -32,6 +34,7 @@ TRUTH = [
     "reminder: imo opal is not nice.",
     "reminder: imo some gentoo devs need to enter this list: https://en.wikipedia.org/wiki/Charlatan#Infamous_individuals",
     "reminder: Khabib Abdulmanapovich Nurmagomedov is the undefeated undisputed champion of the flagship weight division of u.f.c. - allahuackbar.",
+    """reminder: ``[pepe the frog] became an Internet meme when its popularity steadily grew across Myspace, Gaia Online and 4chan in 2008.''.""",
     """reminder: ``That is Jesus, the son of Mary - the word of truth about which they are in dispute.'' -- https://quran.com/19/34.""",
     """reminder: ``Say, "If the sea were ink for [writing] the words of my Lord, the sea would be exhausted before the words of my Lord were exhausted, even if We brought the like of it as a supplement."''.""",
     """reminder: ``He is Allah, other than whom there is no deity, the Sovereign, the Pure, the Perfection, the Bestower of Faith, the Overseer, the Exalted in Might, the Compeller, the Superior. Exalted is Allah above whatever they associate with Him.''.""",
