@@ -99,7 +99,6 @@ def loadfile(p):
     return verse
 
 def sendresponse(network, channel, response):
-    wc.prnt('', 'SENDING')
     wc.command('', '/msg -server {} {} {}'.format(
         network, channel, response
     ))

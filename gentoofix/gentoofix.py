@@ -15,23 +15,25 @@ BUFFERS_ACTIVE = [
     'irc.freenode.#gentoo-chat-exile',
     #'irc.freenode.##happylol',
 ]
-SILENCE_LIMIT = 50
+SILENCE_LIMIT = 100
 TRUTH = [
     "( ͡◉ ͜ʖ ͡◉)",
     "(╯°□°）╯︵ ┻━┻)",
     "┬─┬ノ(º _ ºノ)",
     "r: g. s.",
     "welp.",
-    "G-d bless catholic priests.",
+    "G-d bless catholic priests/nuns.",
+    "reminder: some priests/nuns collect donations to buy free medicines for the ill poor; cheaper than health insurance.  in return, the Godless insult the priests, infest cultural decadence to increase the suicide rate, divorce rate, lowered fertility rate, etc, and fiercely vote to genocide unborn babies by the hands of their own mothers (abortion).  imo God = life, Godlessness = slow extinction.",
     "pacman is fast.",
     "pacman is good.",
     "i like pacman.",
+    "let the gentoo darkness be gone from ur heart https://www.youtube.com/watch?v=cSSiEixBt8E -- ``I Heard the Voice of Jesus [pbuh] Say''.",
+    "reminder: imo stats show that God's law is superior.",
     "reminder: imo gentoo devs r schwul.",
     "reminder: imo systemd is nice.",
     "reminder: imo arch is nice.",
     "reminder: imo gentoo is not nice.",
     "reminder: imo gentoo devs charlatans.",
-    "reminder: imo opal is not nice.",
     "reminder: imo some gentoo devs need to enter this list: https://en.wikipedia.org/wiki/Charlatan#Infamous_individuals",
     "reminder: Khabib Abdulmanapovich Nurmagomedov is the undefeated undisputed champion of the flagship weight division of u.f.c. - allahuackbar.",
     """reminder: ``[pepe the frog] became an Internet meme when its popularity steadily grew across Myspace, Gaia Online and 4chan in 2008.''.""",
@@ -48,7 +50,7 @@ BYPASS_NICKS = [
 #    'blap_',
 ]
 BYPASS_PAUSE = 1
-TOPIC_DELAY = .5 # seconds
+TOPIC_DELAY = 5 # seconds
 
 
 ########################
@@ -98,6 +100,7 @@ def settopic(buff_id, channel, topic):
 def educate(data, signal, signal_data):
     global truth_i
     global previous_chat_messages
+    global todos
 
     # parse input messages
     network, event = signal.split(',')
@@ -127,7 +130,7 @@ def educate(data, signal, signal_data):
                 previous_chat_messages[buff_id] -= BYPASS_PAUSE
 
         if previous_chat_messages[buff_id] % SILENCE_LIMIT == 0:
-            sendresponse(network, channel, TRUTH[truth_i % len(TRUTH)])
+            todos['educate'] = (network, channel, TRUTH[truth_i % len(TRUTH)])
             truth_i += 1
 
     return wc.WEECHAT_RC_OK
@@ -140,7 +143,8 @@ def topic(data, signal, signal_data):
     # parse input messages
     network, event = signal.split(',')
     m_signal_data = re.match(
-        r'^:(?P<nickname>\S+)!(?P<username>\S+)@(?P<host>\S+) \S+ (?P<channel>\S+) :(?P<topic>.*)$',
+        r'^:(?P<nickname>\S+)!(?P<username>\S+)@(?P<host>\S+) '
+        r'\S+ (?P<channel>\S+) :(?P<topic>.*)$',
         signal_data
     )
     nickname = m_signal_data.groupdict()['nickname']
@@ -207,11 +211,18 @@ def housekeeping(data, remaining_calls):
     global todos
 
     for job in todos:
+        # process job
         if job == 'topic':
             if todos[job] is not None:
                 buff_id, channel, topic_clean = todos[job]
                 settopic(buff_id, channel, topic_clean)
-                todos[job] = None
+        elif job == 'educate':
+            if todos[job] is not None:
+                network, channel, msg = todos[job]
+                sendresponse(network, channel, msg)
+
+        # mark job as done
+        todos[job] = None
 
     return wc.WEECHAT_RC_OK
 
@@ -222,6 +233,6 @@ def housekeeping(data, remaining_calls):
 #                      #
 ########################
 wc.hook_signal('*,irc_in2_PRIVMSG', 'educate', '')
-wc.hook_signal('*,irc_in_TOPIC', 'topic', '')
-#wc.hook_signal('*,irc_out_PRIVMSG', 'think', '')
-#wc.hook_timer(int(TOPIC_DELAY * 1000), 0, 0, "housekeeping", "")
+#wc.hook_signal('*,irc_in_TOPIC', 'topic', '')
+wc.hook_signal('*,irc_out_PRIVMSG', 'think', '')
+wc.hook_timer(int(TOPIC_DELAY * 1000), 0, 0, "housekeeping", "")
