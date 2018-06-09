@@ -149,8 +149,8 @@ def callback(data, signal, signal_data):
             )
         else:
             response = (
-                        '{}: syntax err. use !quran X:Y to pull the Yth'
-                        'verse of the Xth sorah, where both X an Y are'
+                        '{}: syntax err. use !quran X:Y to pull the Yth '
+                        'verse of the Xth sorah, where both X an Y are '
                         'natural numbers 1, 2, ....'.format(nickname)
                        )
         sendresponse(network, channel, response)
