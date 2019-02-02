@@ -13,35 +13,12 @@ import time
 ######################
 BUFFERS_ACTIVE = [
     'irc.freenode.#gentoo-chat-exile',
-    #'irc.freenode.##happylol',
 ]
 SILENCE_LIMIT = 100
 TRUTH = [
     "( ͡◉ ͜ʖ ͡◉)",
-    "(╯°□°）╯︵ ┻━┻)",
-    "┬─┬ノ(º _ ºノ)",
-    "r: g. s.",
-    "welp.",
-    "G-d bless catholic priests/nuns.",
-    "reminder: some priests/nuns collect donations to buy free medicines for the ill poor; cheaper than health insurance.  in return, the Godless insult the priests, infest cultural decadence to increase the suicide rate, divorce rate, lowered fertility rate, etc, and fiercely vote to genocide unborn babies by the hands of their own mothers (abortion).  imo God = life, Godlessness = slow extinction.",
-    "pacman is fast.",
-    "pacman is good.",
-    "i like pacman.",
-    "let the gentoo darkness be gone from ur heart https://www.youtube.com/watch?v=cSSiEixBt8E -- ``I Heard the Voice of Jesus [pbuh] Say''.",
-    "reminder: imo stats show that God's law is superior.",
-    "reminder: imo gentoo devs r schwul.",
-    "reminder: imo systemd is nice.",
-    "reminder: imo arch is nice.",
-    "reminder: imo gentoo is not nice.",
-    "reminder: imo gentoo devs charlatans.",
-    "reminder: imo some gentoo devs need to enter this list: https://en.wikipedia.org/wiki/Charlatan#Infamous_individuals",
-    "reminder: Khabib Abdulmanapovich Nurmagomedov is the undefeated undisputed champion of the flagship weight division of u.f.c. - allahuackbar.",
-    """reminder: ``[pepe the frog] became an Internet meme when its popularity steadily grew across Myspace, Gaia Online and 4chan in 2008.''.""",
-    """reminder: ``That is Jesus, the son of Mary - the word of truth about which they are in dispute.'' -- https://quran.com/19/34.""",
-    """reminder: ``Say, "If the sea were ink for [writing] the words of my Lord, the sea would be exhausted before the words of my Lord were exhausted, even if We brought the like of it as a supplement."''.""",
-    """reminder: ``He is Allah, other than whom there is no deity, the Sovereign, the Pure, the Perfection, the Bestower of Faith, the Overseer, the Exalted in Might, the Compeller, the Superior. Exalted is Allah above whatever they associate with Him.''.""",
-    """reminder: ``And your Lord has decreed that you not worship except Him, and to parents, good treatment. Whether one or both of them reach old age [while] with you, say not to them [so much as], "uff," and do not repel them but speak to them a noble word.''.""",
-    """reminder: ``Satan only wants to cause between you animosity and hatred through intoxicants [sic. alcohol] and gambling and to avert you from the remembrance of Allah and from prayer. So will you not desist?''.""",
+    "reminder: emerge is not good (╯°□°）╯︵ ┻━┻).",
+    "reminder: pacman is good ┬─┬ノ(º _ ºノ).",
 ]
 BYPASS_NICKS = [
 #    'blop',
@@ -67,13 +44,14 @@ wc.register(
     '',
     ''
 )
-random.seed(time.time())
-random.shuffle(TRUTH)
+#random.seed(time.time())
+#random.shuffle(TRUTH)
 truth_i = 0
 previous_chat_messages = {}
 iscorvus = {
-    'corvus`' : True,
-    'cavemansmom': True,
+    'MrReader' : True,
+    'Mr_Reader' : True,
+    'Inst':True
 }
 last_approved_topic = ''
 todos = {}
@@ -174,15 +152,13 @@ def topic(data, signal, signal_data):
 
         # undo topic only if corvus changed it
         if nickname in iscorvus:
-            todos['topic'] = (buff_id, channel, 'plz be nice | !OP | SOS')
+            todos['topic'] = (buff_id, channel, last_approved_topic)
         else:
             if topic.lower().find('caveman') == -1:
                 last_approved_topic = topic
                 todos['topic'] = None
             else:
                 todos['topic'] = (buff_id, channel, last_approved_topic)
-
-
     return wc.WEECHAT_RC_OK
 
 def think(data, signal, signal_data):
