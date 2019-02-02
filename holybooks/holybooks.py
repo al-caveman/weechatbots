@@ -18,7 +18,7 @@ BIBLE_KJV = os.path.expanduser('~/.weechat/python/bible/kjv')
 BIBLE_KJV_BOOKS = sorted(os.listdir(BIBLE_KJV))
 CHANNELS_ACTIVE = [
     'freenode/#gentoo-chat-exile',
-    'freenode/#weechat',
+    'freenode/##islam',
     'freesay/#freesay',
     'freenode/##happylol'
 ]
