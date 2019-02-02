@@ -128,7 +128,7 @@ def callback(data, signal, signal_data):
         return wc.WEECHAT_RC_OK
 
     # get book name
-    m_book = re.match(r'^.(?P<book>\w+)', msg)
+    m_book = re.match(r'^\.(?P<book>\w+)', msg)
     if m_book:
         book = m_book.groupdict()['book']
     else:
