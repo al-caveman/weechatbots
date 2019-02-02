@@ -108,7 +108,7 @@ def callback(data, signal, signal_data):
     network, event = signal.split(',')
     if event.find('in') >= 0:
         m_signal_data = re.match(
-            r'^:(?P<nickname>\S+)!\S+ PRIVMSG (?P<channel>\S+) :(?P<msg>.*)$',
+            r'^:(?P<nickname>\S+).\S+ PRIVMSG (?P<channel>\S+) :(?P<msg>.*)$',
             signal_data
         )
         nickname = m_signal_data.groupdict()['nickname']
@@ -127,7 +127,7 @@ def callback(data, signal, signal_data):
         return wc.WEECHAT_RC_OK
 
     # get book name
-    m_book = re.match(r'^!(?P<book>\w+)', msg)
+    m_book = re.match(r'^.(?P<book>\w+)', msg)
     if m_book:
         book = m_book.groupdict()['book']
     else:
@@ -136,7 +136,7 @@ def callback(data, signal, signal_data):
     # handle the books
     if book == 'quran':
         m = re.match(
-            r'^!\w+\W+(?P<sorah>\d+)\D+(?P<verse>\d+)',
+            r'^.\w+\W+(?P<sorah>\d+)\D+(?P<verse>\d+)',
             msg,
         )
         if m:
@@ -149,7 +149,7 @@ def callback(data, signal, signal_data):
             )
         else:
             response = (
-                        '{}: syntax err. use !quran X:Y to pull the Yth '
+                        '{}: syntax err. use .quran X:Y to pull the Yth '
                         'verse of the Xth sorah, where both X an Y are '
                         'natural numbers 1, 2, ....'.format(nickname)
                        )
@@ -158,7 +158,7 @@ def callback(data, signal, signal_data):
     elif book == 'bible':
         # make response
         response = (
-            'use the syntax !BOOK CHAPTER:VERSE, where BOOK is one of '
+            'use the syntax .BOOK CHAPTER:VERSE, where BOOK is one of '
             'the following: {}.'.format(' '.join(BIBLE_KJV_BOOKS))
         )
 
@@ -172,7 +172,7 @@ def callback(data, signal, signal_data):
 
     elif book in BIBLE_KJV_BOOKS:
         m = re.match(
-            r'^!\w+\W+(?P<chapter>\d+)\D+(?P<verse>\d+)',
+            r'^.\w+\W+(?P<chapter>\d+)\D+(?P<verse>\d+)',
             msg
         )
         if m:
@@ -190,7 +190,7 @@ def callback(data, signal, signal_data):
             ))
 
         else:
-            response = '{}: syntax err. !bible for help'.format(nickname)
+            response = '{}: syntax err. .bible for help'.format(nickname)
 
         # send response
         sendresponse(network, channel, response)
