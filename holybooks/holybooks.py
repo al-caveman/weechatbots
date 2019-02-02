@@ -107,6 +107,7 @@ def callback(data, signal, signal_data):
     # parse wtf
     network, event = signal.split(',')
     if event.find('in') >= 0:
+        print(signal_data)
         m_signal_data = re.match(
             r'^:(?P<nickname>\S+).\S+ PRIVMSG (?P<channel>\S+) :(?P<msg>.*)$',
             signal_data
